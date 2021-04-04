@@ -1,4 +1,4 @@
-enum FIELD_TYPES { TEXT = 'TEXT', CHECKBOX = '' }
+enum FIELD_TYPES { TEXT, CHECKBOX }
 
 export interface Question {
   id: number;

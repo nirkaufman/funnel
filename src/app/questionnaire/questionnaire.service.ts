@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Question} from './question.interface';
+import {Question} from './question';
 import {HttpClient} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
 
@@ -27,5 +27,3 @@ export class QuestionnaireService {
         .subscribe( questions => this.questionsSubject.next(questions));
   }
 }
-
-
