@@ -1,0 +1,27 @@
+[
+  {
+    "questionId": 1004,
+    "questionText": "Your email address is:",
+    "questionType": "TEXT"
+  },
+  {
+    "questionId": 1005,
+    "questionText": "address",
+    "questionType": "TEXT"
+  },
+  {
+    "questionId": 1006,
+    "questionText": "Zip code",
+    "questionType": "TEXT"
+  },
+  {
+    "questionId": 1007,
+    "questionText": "City",
+    "questionType": "TEXT"
+  },
+  {
+    "questionId": 1008,
+    "questionText": "I agree with terms please create my policy",
+    "questionType": "CHECKBOX"
+  }
+]

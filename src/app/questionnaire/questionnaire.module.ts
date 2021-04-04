@@ -1,24 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Router, RouterModule} from '@angular/router';
-import {QuestionnaireService} from './questionnaire.service';
+import {QuestionnaireService} from './services/questionnaire.service';
+import { QuestionnaireComponent } from './questionnaire.component';
 import {HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [],
+  declarations: [QuestionnaireComponent],
   providers: [QuestionnaireService],
   imports: [
     CommonModule,
-      HttpClientModule,
-    RouterModule.forRoot([
-      {path: ':pid'}
+    HttpClientModule,
+    ReactiveFormsModule,
+    RouterModule.forChild([
+      {path: '', component: QuestionnaireComponent}
     ]),
   ]
 })
-export class QuestionnaireModule {
-  constructor(router: Router) {
-    router.events.subscribe( (event) => {
-
-    });
-  }
-}
+export class QuestionnaireModule {}
