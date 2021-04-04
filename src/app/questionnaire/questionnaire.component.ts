@@ -1,42 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {QuestionnaireService} from './services/questionnaire.service';
 import {Question} from './question';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'fun-questionnaire',
   template: `
-    <div class="">
-      questionnaire works!
-        <pre>{{ questions | json }}</pre>
-    </div>
+      <div class="">
+          Questionnaire
+          <form [formGroup]="questionsForm">
+              <div *ngFor="let question of questions">
+                  <label>{{question.text}}</label>
+                  <input [type]="question.type"
+                         [formControlName]="question.id.toString()">
+              </div>
+          </form>
+          
+      </div>
   `,
-  styles: []
 })
-export class QuestionnaireComponent implements OnInit {
+export class QuestionnaireComponent implements OnInit, OnDestroy {
+  private questionsSubscription: Subscription;
+
   public questionsForm: FormGroup;
   public questions: Array<Question>;
 
-  constructor(private questionnaireService: QuestionnaireService) {}
+  constructor(private questionnaireService: QuestionnaireService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
+    this.questionsForm = new FormGroup({});
     this.questionnaireService.getQuestions(1);
 
-    this.questionnaireService.questions$.subscribe( questions => {
-      this.questionsForm = this.buildFormFromQuestions(questions);
+    this.route.params.subscribe( params => console.log(params));
+
+    this.questionsSubscription = this.questionnaireService.questions$.subscribe(questions => {
+      this.buildFormFromQuestions(questions);
       this.questions = questions;
-      console.log(this.questionsForm);
     });
   }
 
-  private buildFormFromQuestions(questions: Array<Question>): FormGroup {
-    const questionsForm = new FormGroup({});
+  ngOnDestroy(): void {
+    this.questionsSubscription.unsubscribe();
+  }
 
-    questions.forEach( question => {
-      questionsForm.addControl(question.id.toString(), new FormControl());
+  private buildFormFromQuestions(questions: Array<Question>): void {
+    questions.forEach(question => {
+      this.questionsForm.addControl(question.id.toString(), new FormControl());
     });
-
-    return questionsForm;
   }
 
 }

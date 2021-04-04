@@ -7,6 +7,7 @@ import {RouterModule} from '@angular/router';
   declarations: [AppComponent],
   imports: [BrowserModule, RouterModule.forRoot([
     {
+      // lazy load the questionnaire module
       path: 'questionnaire',
       loadChildren: () => import('./questionnaire/questionnaire.module')
           .then(m => m.QuestionnaireModule)
