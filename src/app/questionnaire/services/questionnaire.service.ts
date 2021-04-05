@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Question} from '../question';
 import {HttpClient} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
+import {ActivatedRoute, ActivationEnd, Router} from '@angular/router';
 
 const mock: Array<Question> = [
   {
@@ -29,7 +30,7 @@ const mock: Array<Question> = [
     id: 1008,
     text: 'I agree with terms please create my policy',
     type: 'CHECKBOX'
-  }
+  },
 ];
 
 

@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, RouterModule.forRoot([
+    {path: '', redirectTo: 'questionnaire'},
     {
       // lazy load the questionnaire module
       path: 'questionnaire',
@@ -13,7 +14,6 @@ import {RouterModule} from '@angular/router';
           .then(m => m.QuestionnaireModule)
     }
   ])],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
