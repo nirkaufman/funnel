@@ -14,6 +14,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forChild([
+      {path: '', redirectTo: '1', pathMatch: 'full'},
       {path: '1', component: QuestionnaireComponent},
       {path: '2', component: QuestionnaireComponent}
     ]),

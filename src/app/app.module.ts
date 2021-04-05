@@ -6,7 +6,7 @@ import {RouterModule} from '@angular/router';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, RouterModule.forRoot([
-    {path: '', redirectTo: 'questionnaire'},
+    {path: '', redirectTo: 'questionnaire', pathMatch: 'full'},
     {
       // lazy load the questionnaire module
       path: 'questionnaire',

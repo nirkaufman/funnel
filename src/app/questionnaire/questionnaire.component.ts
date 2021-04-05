@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {QuestionnaireService} from './services/questionnaire.service';
 import {Question} from './question';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -19,6 +19,7 @@ import {ActivatedRoute} from '@angular/router';
           </form>
           <button (click)="nextAction()">{{ nextActionLabel }}</button>
       </div>
+      <pre>{{ questionsForm.value | json }}</pre>
   `,
 })
 export class QuestionnaireComponent implements OnInit, OnDestroy {
@@ -28,21 +29,18 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   public questions: Array<Question>;
   public nextActionLabel: string;
 
-  constructor(private questionnaireService: QuestionnaireService, private route: ActivatedRoute) {
-  }
+  constructor(private questionnaireService: QuestionnaireService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.questionsForm = new FormGroup({});
 
+    this.questionsForm.valueChanges.subscribe( values => {
+      console.log(values);
+    });
+
     this.route.params.subscribe(params => {
-      if (params.pid === '1') {
-        this.questionnaireService.getQuestions(params.pid);
+        this.questionnaireService.getQuestions(1);
         this.nextActionLabel = 'NEXT';
-      }
-      if (params.pid === '2') {
-        this.questionnaireService.getQuestions(params.pid);
-        this.nextActionLabel = 'SUBMIT';
-      }
     });
 
     this.questionsSubscription = this.questionnaireService.questions$.subscribe(questions => {
@@ -57,7 +55,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   private buildFormFromQuestions(questions: Array<Question>): void {
     questions.forEach(question => {
-      this.questionsForm.addControl(question.id.toString(), new FormControl());
+      const key = question.id.toString();
+      const initialValue = localStorage.getItem(key);
+
+      this.questionsForm.addControl(question.id.toString(), new FormControl(initialValue || '' ));
     });
   }
 
