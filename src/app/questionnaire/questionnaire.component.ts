@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {QuestionnaireService} from './services/questionnaire.service';
 import {Question} from './question';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -13,7 +13,7 @@ import {ActivatedRoute} from '@angular/router';
           <form [formGroup]="questionsForm">
               <div *ngFor="let question of questions">
                   <label>{{question.text}}</label>
-                  <input [type]="question.type"
+                  <input class="input" [type]="question.type"
                          [formControlName]="question.id.toString()">
               </div>
           </form>
@@ -21,6 +21,11 @@ import {ActivatedRoute} from '@angular/router';
       </div>
       <pre>{{ questionsForm.value | json }}</pre>
   `,
+  styles: [`
+    .input {
+        background-color: blue;
+    }
+  `]
 })
 export class QuestionnaireComponent implements OnInit, OnDestroy {
   private questionsSubscription: Subscription;
