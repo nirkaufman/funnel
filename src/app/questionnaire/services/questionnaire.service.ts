@@ -3,7 +3,6 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Question} from '../question';
 import {HttpClient} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
-import {ActivatedRoute, ActivationEnd, Router} from '@angular/router';
 
 const mock: Array<Question> = [
   {
@@ -33,7 +32,6 @@ const mock: Array<Question> = [
   },
 ];
 
-
 @Injectable()
 export class QuestionnaireService {
   private questionsSubject: BehaviorSubject<Array<Question>>;
@@ -52,13 +50,12 @@ export class QuestionnaireService {
 
   public getQuestions(pageId: number): void {
     this.isLoadingSubject.next(true);
+    // of(mock)
+    //     .pipe(finalize(() => this.isLoadingSubject.next(false)))
+    //     .subscribe(questions => this.questionsSubject.next(mock));
 
-    of(mock)
+    this.httpClient.get<Array<Question>>('https://jsonplaceholder.typicode.com/users')
         .pipe(finalize(() => this.isLoadingSubject.next(false)))
         .subscribe(questions => this.questionsSubject.next(mock));
-
-    // this.httpClient.get<Array<Question>>('./data')
-    //     .pipe(finalize(() => this.isLoadingSubject.next(false)))
-    //     .subscribe(questions => this.questionsSubject.next(questions));
   }
 }

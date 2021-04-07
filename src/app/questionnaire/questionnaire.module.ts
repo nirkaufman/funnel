@@ -3,12 +3,20 @@ import { CommonModule } from '@angular/common';
 import {Router, RouterModule} from '@angular/router';
 import {QuestionnaireService} from './services/questionnaire.service';
 import { QuestionnaireComponent } from './questionnaire.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
+import {AuthInterceptor} from './services/auth.interceptor';
 
 @NgModule({
   declarations: [QuestionnaireComponent],
-  providers: [QuestionnaireService],
+  providers: [
+      QuestionnaireService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   imports: [
     CommonModule,
     HttpClientModule,

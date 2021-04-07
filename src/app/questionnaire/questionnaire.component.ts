@@ -5,7 +5,6 @@ import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} f
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 
-
 class NirValidators {
   static isNir(control: AbstractControl): ValidationErrors | null {
     if (control.value !== 'nir') {
